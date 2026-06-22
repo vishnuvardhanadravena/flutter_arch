@@ -35,7 +35,7 @@
 - Animation utilities and widgets
 - Advanced state management options
 
-## 1.0.0
+## 1.1.1
 
 - Initial Release
 - Project Structure Generator
