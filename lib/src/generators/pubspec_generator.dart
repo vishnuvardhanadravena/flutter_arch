@@ -1,42 +1,103 @@
 import 'dart:io';
 
 class PubspecGenerator {
-  static Future<void> addDependencies() async {
-    final packages = [
-      'flutter_bloc',
-      'equatable',
-      'dio',
-      'get_it',
-      'go_router',
-      'flutter_secure_storage',
-      'shared_preferences',
-      'connectivity_plus',
-      'internet_connection_checker',
-    ];
+  static Future<void> setup() async {
+    print('\n📦 Setting up dependencies...\n');
 
-    for (final package in packages) {
-      final result = await Process.run('flutter', [
-        'pub',
-        'add',
-        package,
-      ], runInShell: true);
+    print('Current Directory: ${Directory.current.path}');
+    print('Pubspec Exists: ${File('pubspec.yaml').existsSync()}');
 
-      if (result.exitCode == 0) {
-        print('✅ Added $package');
-      } else {
-        print('❌ Failed: $package');
-        print(result.stderr);
-      }
+    if (!File('pubspec.yaml').existsSync()) {
+      print('❌ pubspec.yaml not found');
+      return;
     }
 
-    print('\n🎉 Dependencies added successfully');
+    await addDependencies();
+    await addDevDependencies();
+
+    print('\n🎉 All dependencies installed successfully!');
+  }
+static Future<void> addDependencies() async {
+  final pubspecFile = File('pubspec.yaml');
+
+  if (!await pubspecFile.exists()) {
+    print('❌ pubspec.yaml not found');
+    return;
   }
 
-  static Future<void> addDevDependencies() async {
-    final packages = ['build_runner', 'json_serializable', 'flutter_lints'];
+  final pubspecContent = await pubspecFile.readAsString();
 
-    for (final package in packages) {
-      await Process.run('flutter', ['pub', 'add', 'dev:$package']);
+  final packages = [
+    'flutter_bloc',
+    'equatable',
+    'dio',
+    'get_it',
+    'go_router',
+    'flutter_secure_storage',
+    'shared_preferences',
+    'connectivity_plus',
+    'hive_flutter',
+    'internet_connection_checker',
+  ];
+
+  for (final package in packages) {
+    if (pubspecContent.contains('$package:')) {
+      print('✅ Already exists: $package');
+      continue;
+    }
+
+    print('📦 Adding $package');
+
+    final result = await Process.run(
+      'flutter',
+      ['pub', 'add', package],
+      runInShell: true,
+    );
+
+    if (result.exitCode == 0) {
+      print('✅ Added $package');
+    } else {
+      print('❌ Failed: $package');
+      print(result.stderr);
     }
   }
+}
+ static Future<void> addDevDependencies() async {
+  final pubspecFile = File('pubspec.yaml');
+
+  if (!await pubspecFile.exists()) {
+    print('❌ pubspec.yaml not found');
+    return;
+  }
+
+  final pubspecContent = await pubspecFile.readAsString();
+
+  final packages = [
+    'build_runner',
+    'json_serializable',
+    'flutter_lints',
+  ];
+
+  for (final package in packages) {
+    if (pubspecContent.contains('$package:')) {
+      print('✅ Dev dependency already exists: $package');
+      continue;
+    }
+
+    print('📦 Adding dev dependency: $package');
+
+    final result = await Process.run(
+      'flutter',
+      ['pub', 'add', '--dev', package],
+      runInShell: true,
+    );
+
+    if (result.exitCode == 0) {
+      print('✅ Added dev dependency: $package');
+    } else {
+      print('❌ Failed: $package');
+      print(result.stderr);
+    }
+  }
+}
 }

@@ -367,7 +367,7 @@ class ApiService {
 
   static const String requestInterceptor = '''
 import 'package:dio/dio.dart';
-import '../storage/app_secure_storage.dart';
+import '../../storage/app_secure_storage.dart';
 
 class RequestInterceptor extends Interceptor {
   @override
@@ -402,7 +402,7 @@ class ResponseInterceptor extends Interceptor {
 
   static const String errorInterceptor = '''
 import 'package:dio/dio.dart';
-import '../../core/exceptions/api_exception.dart';
+import '../../exceptions/api_exception.dart';
 
 class ErrorInterceptor extends Interceptor {
   @override
@@ -970,7 +970,7 @@ class ApiResponse<T> {
     return {
       "success": success,
       "message": message,
-      "data": data != null && toJsonT != null ? toJsonT(data) : null,
+      "data": data != null && toJsonT != null ? toJsonT(data as T) : null,
     };
   }
 }

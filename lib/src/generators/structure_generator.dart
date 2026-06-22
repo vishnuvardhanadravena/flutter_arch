@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:flutter_arch/src/generators/pubspec_generator.dart';
+
 import '../utils/file_writer.dart';
 import 'templates.dart';
 
@@ -27,15 +29,15 @@ class StructureGenerator {
 
     print('📁 Creating directories...');
     for (final folder in folders) {
-  final dir = Directory(folder);
+      final dir = Directory(folder);
 
-  if (!await dir.exists()) {
-    await dir.create(recursive: true);
-    print('📁 Created: $folder');
-  } else {
-    print('✅ Already exists: $folder');
-  }
-}
+      if (!await dir.exists()) {
+        await dir.create(recursive: true);
+        print('📁 Created: $folder');
+      } else {
+        print('✅ Already exists: $folder');
+      }
+    }
     print('✅ Directories created\n');
 
     // App Files
@@ -185,5 +187,6 @@ class StructureGenerator {
     print(
       '  3. Create features using: flutter_arch create-feature <feature-name>',
     );
+    await PubspecGenerator.setup();
   }
 }

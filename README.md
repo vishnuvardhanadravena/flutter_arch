@@ -1,5 +1,17 @@
 # Flutter Architecture CLI
+# Flutter Arch
 
+Generate Flutter Clean Architecture project structure.
+
+## Install
+
+dart pub global activate flutter_arch
+
+## Usage
+
+flutter_arch init
+
+flutter_arch create-feature auth
 A comprehensive command-line tool for generating Flutter projects with clean architecture, best practices, and all necessary boilerplate code.
 
 ## Features
