@@ -1,4 +1,4 @@
-## [1.0.0] - 2024-01-22
+## [1.1.1] - 2024-01-22
 
 ### Added
 - Initial release of Flutter Architecture CLI
