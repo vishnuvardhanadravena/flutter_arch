@@ -1055,12 +1055,12 @@ class ${className}Model extends ${className}Entity {
 import '../models/${featureName}_model.dart';
 
 abstract class ${className}RemoteDatasource {
-  Future<${className}Model> get${className}();
+  Future<${className}Model> get$className();
 }
 
 class ${className}RemoteDatasourceImpl implements ${className}RemoteDatasource {
   @override
-  Future<${className}Model> get${className}() async {
+  Future<${className}Model> get$className() async {
     // TODO: Implement remote API call
     throw UnimplementedError();
   }
@@ -1081,9 +1081,9 @@ class ${className}RepositoryImpl implements ${className}Repository {
   ${className}RepositoryImpl({required this.remoteDatasource});
 
   @override
-  Future<${className}Entity> get${className}() async {
+  Future<${className}Entity> get$className() async {
     try {
-      final model = await remoteDatasource.get${className}();
+      final model = await remoteDatasource.get$className();
       return model;
     } catch (e) {
       rethrow;
@@ -1099,7 +1099,7 @@ class ${className}RepositoryImpl implements ${className}Repository {
 import '../entities/${featureName}_entity.dart';
 
 abstract class ${className}Repository {
-  Future<${className}Entity> get${className}();
+  Future<${className}Entity> get$className();
 }
 ''';
   }
@@ -1116,7 +1116,7 @@ class Get${className}Usecase {
   Get${className}Usecase({required this.repository});
 
   Future<${className}Entity> call() async {
-    return await repository.get${className}();
+    return await repository.get$className();
   }
 }
 ''';
@@ -1219,7 +1219,7 @@ class _${className}ScreenState extends State<${className}Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('${className}')),
+      appBar: AppBar(title: const Text('$className')),
       body: BlocBuilder<${className}Bloc, ${className}State>(
         builder: (context, state) {
           if (state is ${className}LoadingState) {

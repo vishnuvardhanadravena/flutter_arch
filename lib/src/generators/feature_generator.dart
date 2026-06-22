@@ -5,10 +5,17 @@ import 'templates.dart';
 
 class FeatureGenerator {
   static Future<void> generate(String featureName) async {
-    final name = featureName.toLowerCase();
-    final className = _capitalize(name);
+  final name = featureName.toLowerCase();
+  final className = _capitalize(name);
 
-    print('\n🚀 Creating Feature: $className\n');
+  final featureDir = Directory('lib/features/$name');
+
+  if (await featureDir.exists()) {
+    print('⚠️ Feature "$className" already exists.');
+    print('ℹ️ Only missing files will be created.\n');
+  }
+
+  print('\n🚀 Creating Feature: $className\n');
 
     // Create all required folders
     final folders = [
@@ -24,9 +31,16 @@ class FeatureGenerator {
     ];
 
     print('📁 Creating feature directories...');
-    for (final folder in folders) {
-      await Directory(folder).create(recursive: true);
-    }
+   for (final folder in folders) {
+  final dir = Directory(folder);
+
+  if (!await dir.exists()) {
+    await dir.create(recursive: true);
+    print('📁 Created: $folder');
+  } else {
+    print('✅ Already exists: $folder');
+  }
+}
     print('✅ Directories created\n');
 
     // Domain Layer

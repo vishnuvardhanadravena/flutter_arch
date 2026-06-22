@@ -88,6 +88,7 @@
 ///   },
 /// )
 /// ```
+library;
 
 void main() {
   print('''

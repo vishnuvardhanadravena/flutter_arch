@@ -27,8 +27,15 @@ class StructureGenerator {
 
     print('📁 Creating directories...');
     for (final folder in folders) {
-      await Directory(folder).create(recursive: true);
-    }
+  final dir = Directory(folder);
+
+  if (!await dir.exists()) {
+    await dir.create(recursive: true);
+    print('📁 Created: $folder');
+  } else {
+    print('✅ Already exists: $folder');
+  }
+}
     print('✅ Directories created\n');
 
     // App Files
